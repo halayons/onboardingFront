@@ -1,0 +1,10 @@
+<mat-toolbar color="primary" class="custom-toolbar">
+    <span class="logo">Onboarding App</span>
+    <nav class="nav-links">
+        <a mat-button routerLink="/" routerLinkActive="active-link"
+            [routerLinkActiveOptions]="{ exact: true }">Inicio</a>
+        <a mat-button routerLink="/calendario" routerLinkActive="active-link">Calendario</a>
+        <a mat-button routerLink="/colaboradores" routerLinkActive="active-link">Colaboradores</a>
+        <button (click)="logout()" class="ml-4 bg-blue-600 text-white px-3 py-1 rounded">Salir</button>
+    </nav>
+</mat-toolbar>

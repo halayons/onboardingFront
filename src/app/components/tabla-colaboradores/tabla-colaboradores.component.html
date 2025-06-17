@@ -1,0 +1,155 @@
+<div class="bg-white rounded-2x1 shadow-md p-6">
+    <h2 [routerLink]="['/colaboradores']" class="block text-xl font-semibold mb-4 cursor-pointer">
+        Lista de Colaboradores
+    </h2>
+    <div class="flex gap-4 mb-4">
+        <select [(ngModel)]="filtroTipoOnboarding" class="border rounded p-2">
+            <option value="">Todos los tipos</option>
+            <option value="onboardingGeneral">Onboarding General</option>
+            <option value="onboardingTecnico">Onboarding Técnico</option>
+        </select>
+        <select [(ngModel)]="filtroValorOnboarding" class="border rounded p-2">
+            <option value="">Todos</option>
+            <option value="true">Completado (✅)</option>
+            <option value="false">Pendiente (❌)</option>
+        </select>
+    </div>
+    <table class="min-w-full table-auto border border-gray-200 text-sm">
+        <thead class="bg-gray-100 text-left">
+            <tr>
+                <th class="px-4 py-2">Nombre</th>
+                <th class="px-4 py-2">
+                    Correo</th>
+                <th class="px-4 py-2">
+                    Ingreso</th>
+                <th class="px-4 py-2">
+                    Técnico</th>
+                <th class="px-4 py-2">
+                    Onboarding General</th>
+                <th class="px-4 py-2">
+                    Onboarding Técnico</th>
+                <th class="px-4 py-2">Acciones</th>
+            </tr>
+        </thead>
+        <tbody>
+            <tr *ngFor="let colaborador of colaboradores | filtroOnboarding:filtroTipoOnboarding:filtroValorOnboarding"
+                class="border-t">
+                <td class="px-4 py-2 group relative">
+                    <ng-container
+                        *ngIf="colaborador.id !== undefined && editandoCampo[colaborador.id] === 'nombre'; else mostrarNombre">
+                        <input [(ngModel)]="valorTemporal" (blur)="guardarEdicionCampo(colaborador, 'nombre')"
+                            (keydown.enter)="guardarEdicionCampo(colaborador, 'nombre')"
+                            class="border p-1 rounded w-full" autofocus />
+                    </ng-container>
+                    <ng-template #mostrarNombre>
+                        <span
+                            class="absolute left-2 top-1/2 -translate-y-1/2 text-gray-400 opacity-0 group-hover:opacity-100 cursor-pointer transition"
+                            (click)="colaborador.id !== undefined && empezarEdicionCampo(colaborador, 'nombre')">✏️</span>
+                        <span class="pl-6">{{ colaborador.nombre }}</span>
+                    </ng-template>
+                </td>
+                <td class="px-4 py-2 group relative">
+                    <ng-container
+                        *ngIf="colaborador.id !== undefined && editandoCampo[colaborador.id] === 'email'; else mostrarEmail">
+                        <input [(ngModel)]="valorTemporal" (blur)="guardarEdicionCampo(colaborador, 'email')"
+                            (keydown.enter)="guardarEdicionCampo(colaborador, 'email')"
+                            class="border p-1 rounded w-full" autofocus />
+                    </ng-container>
+                    <ng-template #mostrarEmail>
+                        <span
+                            class="absolute left-2 top-1/2 -translate-y-1/2 text-gray-400 opacity-0 group-hover:opacity-100 cursor-pointer transition"
+                            (click)="colaborador.id !== undefined && empezarEdicionCampo(colaborador, 'email')">✏️</span>
+                        <span class="pl-6">{{ colaborador.email }}</span>
+                    </ng-template>
+                </td>
+                <td class="px-4 py-2 group relative">
+                    <ng-container
+                        *ngIf="colaborador.id !== undefined && editandoCampo[colaborador.id] === 'fechaIngreso'; else mostrarFechaIngreso">
+                        <input type="date" [(ngModel)]="valorTemporal"
+                            (blur)="guardarEdicionCampo(colaborador, 'fechaIngreso')"
+                            (keydown.enter)="guardarEdicionCampo(colaborador, 'fechaIngreso')"
+                            class="border p-1 rounded w-full" autofocus />
+                    </ng-container>
+                    <ng-template #mostrarFechaIngreso>
+                        <span class="pl-6">{{ colaborador.fechaIngreso | date }}</span>
+                        <span
+                            class="absolute left-2  top-1/2 -translate-y-1/2 text-gray-400 opacity-0 group-hover:opacity-100 cursor-pointer transition"
+                            (click)="colaborador.id !== undefined && empezarEdicionCampo(colaborador, 'fechaIngreso')">✏️</span>
+                    </ng-template>
+                </td>
+                <td class="px-4 py-2 group relative">
+                    <ng-container
+                        *ngIf="colaborador.id !== undefined && editandoCampo[colaborador.id] === 'fechaOnboardingTecnico'; else mostrarFechaOnboardingTecnico">
+                        <input type="date" [(ngModel)]="valorTemporal"
+                            (blur)="guardarEdicionCampo(colaborador, 'fechaOnboardingTecnico')"
+                            (keydown.enter)="guardarEdicionCampo(colaborador, 'fechaOnboardingTecnico')"
+                            class="border p-1 rounded w-full" autofocus />
+                    </ng-container>
+                    <ng-template #mostrarFechaOnboardingTecnico>
+                        <span
+                            class="absolute left-2 top-1/2 -translate-y-1/2 text-gray-400 opacity-0 group-hover:opacity-100 cursor-pointer transition"
+                            (click)="colaborador.id !== undefined && empezarEdicionCampo(colaborador, 'fechaOnboardingTecnico')">✏️</span>
+                        <span class="pl-6">
+                            {{ colaborador.fechaOnboardingTecnico ?
+                            (colaborador.fechaOnboardingTecnico | date) : 'No definido' }}
+                        </span>
+                    </ng-template>
+                </td>
+                <td class="px-4 py-2 text-center group relative">
+                    <ng-container
+                        *ngIf="colaborador.id !== undefined && editandoCampo[colaborador.id] === 'onboardingGeneral'; else mostrarOnboardingGeneral">
+                        <select [(ngModel)]="valorTemporal"
+                            (blur)="guardarEdicionCampo(colaborador, 'onboardingGeneral')"
+                            (change)="guardarEdicionCampo(colaborador, 'onboardingGeneral')"
+                            class="border p-1 rounded w-full" autofocus>
+                            <option [value]="true">✅</option>
+                            <option [value]="false">❌</option>
+                        </select>
+                    </ng-container>
+                    <ng-template #mostrarOnboardingGeneral>
+                        <span
+                            class="absolute left-2 top-1/2 -translate-y-1/2 text-gray-400 opacity-0 group-hover:opacity-100 cursor-pointer transition"
+                            (click)="colaborador.id !== undefined && empezarEdicionCampo(colaborador, 'onboardingGeneral')">✏️</span>
+                        <span class="pl-6">{{ colaborador.onboardingGeneral ? '✅' : '❌' }}</span>
+                    </ng-template>
+                </td>
+                <td class="px-4 py-2 text-center group relative">
+                    <ng-container
+                        *ngIf="colaborador.id !== undefined && editandoCampo[colaborador.id] === 'onboardingGeneral'; else mostrarOnboardingTecnico">
+                        <select [(ngModel)]="valorTemporal"
+                            (blur)="guardarEdicionCampo(colaborador, 'onboardingTecnico')"
+                            (change)="guardarEdicionCampo(colaborador, 'onboardingTecnico')"
+                            class="border p-1 rounded w-full" autofocus>
+                            <option [value]="true">✅</option>
+                            <option [value]="false">❌</option>
+                        </select>
+                    </ng-container>
+                    <ng-template #mostrarOnboardingTecnico>
+                        <span
+                            class="absolute left-2 top-1/2 -translate-y-1/2 text-gray-400 opacity-0 group-hover:opacity-100 cursor-pointer transition"
+                            (click)="colaborador.id !== undefined && empezarEdicionCampo(colaborador, 'onboardingTecnico')">✏️</span>
+                        <span class="pl-6">{{ colaborador.onboardingTecnico ? '✅' : '❌' }}</span>
+                    </ng-template>
+                </td>
+
+                <td class="px-4 py-2">
+                    <div class="flex gap-4 justify-center items-center">
+                        <button (click)="abrirEditarModal(colaborador)" class="text-blue-600 hover:underline">✏️
+                        </button>
+                        <button (click)="eliminarColaborador(colaborador)" class="text-blue-600 hover:underline">
+                            🗑️</button>
+                    </div>
+                </td>
+            </tr>
+        </tbody>
+    </table>
+</div>
+
+<div *ngIf="editarModal" class="fixed inset-0 bg-black bg-opacity-40 flex items-center justify-center z-50">
+    <div class="bg-white p-8 rounded shadow-lg w-full max-w-lg relative">
+        <button (click)="cerrarEditarModal()" class="absolute top-2 right-2 text-gray-500 text-xl">&times;</button>
+        <app-formulario-colaborador [colaborador]="colaboradorSeleccionado!" [modo]="'editar'"
+            (guardar)="guardarCambios($event)" (cancelar)="cerrarEditarModal()">
+        </app-formulario-colaborador>
+    </div>
+</div>

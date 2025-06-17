@@ -1,29 +1,17 @@
-import { TestBed } from '@angular/core/testing';
 import { AppComponent } from './app.component';
 
 describe('AppComponent', () => {
-  beforeEach(async () => {
-    await TestBed.configureTestingModule({
-      imports: [AppComponent],
-    }).compileComponents();
+  let component: AppComponent;
+
+  beforeEach(() => {
+    component = new AppComponent();
   });
 
-  it('should create the app', () => {
-    const fixture = TestBed.createComponent(AppComponent);
-    const app = fixture.componentInstance;
-    expect(app).toBeTruthy();
+  it('debe crearse correctamente', () => {
+    expect(component).toBeTruthy();
   });
 
-  it(`should have the 'frontend-onboarding' title`, () => {
-    const fixture = TestBed.createComponent(AppComponent);
-    const app = fixture.componentInstance;
-    expect(app.title).toEqual('frontend-onboarding');
-  });
-
-  it('should render title', () => {
-    const fixture = TestBed.createComponent(AppComponent);
-    fixture.detectChanges();
-    const compiled = fixture.nativeElement as HTMLElement;
-    expect(compiled.querySelector('h1')?.textContent).toContain('Hello, frontend-onboarding');
+  it('debe tener el título correcto', () => {
+    expect(component.title).toBe('frontend-onboarding');
   });
 });

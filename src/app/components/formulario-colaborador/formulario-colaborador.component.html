@@ -1,0 +1,55 @@
+<div class="bg-white p-6 rounded-2x1 shadow-md">
+    <h2 class="text-xl font-semibold mb-4">Registrar Colaborador</h2>
+    <form #form="ngForm" (ngSubmit)="modo === 'crear' ? registrarColaborador() : onSubmit()" class="space-y-4">
+        <div>
+            <label for="nombre" class="block text-sm font-medium">Nombre:</label>
+            <input type="text" id="nombre" [(ngModel)]="colaborador.nombre" name="nombre" required
+                class="mt-1 w-full p-2 border border-gray-300 rounded">
+        </div>
+
+        <div>
+            <label for="correo" class="block text-sm font-medium">Correo:</label>
+            <input type="email" id="correo" [(ngModel)]="colaborador.email" name="email" required
+                class="mt-1 w-full p-2 border border-gray-300 rounded">
+        </div>
+
+        <div class="mb-4">
+            <label for="fechaIngreso" class="block text-sm font-medium">Fecha de Ingreso:</label>
+            <input type="date" id="fechaIngreso" [(ngModel)]="colaborador.fechaIngreso" name="fechaIngreso" required
+                class="mt-1 w-full p-2 border border-gray-300 rounded">
+        </div>
+        <div class="mb-4">
+            <label for="fechaOnboardingTecnico" class="block text-sm font-medium">Fecha de Onboarding Tecnico:</label>
+            <input type="date" id="fechaOnboardingTecnico" [(ngModel)]="colaborador.fechaOnboardingTecnico"
+                name="fechaOnboardingTecnico" class="mt-1 w-full p-2 border border-gray-300 rounded">
+        </div>
+        <div class="flex items-center gap-4 pt-4 pr-12 pl-12 justify-between">
+            <div class="flex items-center gap-2">
+                <label class="font-medium">Onboarding General</label>
+                <button type="button" (click)="colaborador.onboardingGeneral = !colaborador.onboardingGeneral"
+                    class="px-3 py-1 rounded-full text-white font-semibold transition focus:outline-none" [ngClass]="{
+                        'bg-gray-200': colaborador.onboardingGeneral,
+                        'bg-gray-300': !colaborador.onboardingGeneral
+                    }">
+                    {{ colaborador.onboardingGeneral ? '✔️' : '❌' }}
+                </button>
+            </div>
+            <div class="flex items-center gap-2">
+                <label class="font-medium">Onboarding Técnico</label>
+                <button type="button" (click)="colaborador.onboardingTecnico = !colaborador.onboardingTecnico"
+                    class="px-3 py-1 rounded-full text-white font-semibold transition focus:outline-none" [ngClass]="{
+                        'bg-gray-200': colaborador.onboardingTecnico,
+                        'bg-gray-300': !colaborador.onboardingTecnico
+                    }">
+                    {{ colaborador.onboardingTecnico ? '✔️' : '❌' }}
+                </button>
+            </div>
+        </div>
+        <div class="mb-4 flex justify-end space-x-2 pt-6 pb-4">
+            <button type="submit" [disabled]="!form.valid"
+                class="bg-blue-600 text-white px-4 py-2 rounded hover:bg-blue-700 disabled:opacity-50">
+                {{ modo === 'crear' ? 'Registrar Colaborador': 'Actualizar Colaborador' }}
+            </button>
+        </div>
+    </form>
+</div>

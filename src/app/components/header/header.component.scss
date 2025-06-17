@@ -1,0 +1,41 @@
+.custom-toolbar {
+    background: linear-gradient(90deg, #1976d2 0%, #2196f3 100%);
+    box-shadow: 0 2px 8px rgba(25, 118, 210, 0.08);
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    min-height: 64px;
+}
+
+.logo {
+    font-size: 1.5rem;
+    font-weight: bold;
+    letter-spacing: 2px;
+    color: #fff;
+}
+
+.nav-links {
+    display: flex;
+    gap: 1.5rem;
+
+    a {
+        color: #e3f2fd !important;
+        font-weight: 500;
+        font-size: 1.1rem;
+        border-bottom: 2px solid transparent;
+        border-radius: 0;
+        transition: border-color 0.2s, color 0.2s, background 0.2s;
+
+        &:hover {
+            color: #fff !important;
+            background: rgba(33, 150, 243, 0.15);
+            border-bottom: 2px solid #fff;
+        }
+
+        &.active-link {
+            color: #fff !important;
+            border-bottom: 2px solid #fff;
+            background: rgba(33, 150, 243, 0.25);
+        }
+    }
+}
